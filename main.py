@@ -1790,7 +1790,7 @@ def main() -> None:
 
 # ===== MAIN EXECUTION =====
 if __name__ == '__main__':
-    # Initialize enhanced logging
+    # Simple logging setup
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -1800,33 +1800,26 @@ if __name__ == '__main__':
         ]
     )
     
-    logging.info("🎮 EarningClubBot Starting...")
-    logging.info(f"🔑 Admin ID: {ADMIN_ID}")
+    logging.info("🚀 EarningClubBot Starting...")
+    logging.info(f"🆔 Admin ID: {ADMIN_ID}")
     logging.info(f"🔧 Dev Mode: {DEV_MODE}")
-    logging.info(f"🔧 Maintenance Mode: {config.MAINTENANCE_MODE}")
     
-    # Check essential environment variables
-    missing_vars = config.validate_config()
-    if missing_vars:
-        logging.error(f"❌ Missing required environment variables: {', '.join(missing_vars)}")
-        logging.error("Please set up your secrets in the Replit environment.")
-        exit(1)
-
+    # Initialize database
     try:
         init_db()
-        all_users = get_all_users()
-        logging.info(f"📊 Database initialized. Users: {len(all_users)}")
+        logging.info("✅ Database initialized")
     except Exception as e:
         logging.error(f"❌ Database error: {e}")
         exit(1)
 
+    # Auto-restart loop
     while True:
         try:
             main()
         except KeyboardInterrupt:
-            logging.info("👋 Bot stopped by user")
+            logging.info("🛑 Bot stopped by user")
             break
         except Exception as e:
-            logging.error(f"❌ Bot crashed: {e}")
-            logging.info("🔄 Restarting in 30 seconds...")
-            time.sleep(30)
+            logging.error(f"💥 Bot crashed: {e}")
+            logging.info("🔄 Restarting in 10 seconds...")
+            time.sleep(10)
