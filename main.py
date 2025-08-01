@@ -42,7 +42,7 @@ def ping():
 def run():
     retry_count = 0
     max_retries = 5
-    port = int(os.environ.get('PORT', 8080))
+    port = int(os.environ.get('PORT', 10000))  # Use Render's default port
 
     while retry_count < max_retries:
         try:
